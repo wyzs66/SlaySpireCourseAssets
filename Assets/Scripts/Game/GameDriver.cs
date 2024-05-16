@@ -10,6 +10,8 @@ using UnityEngine.Assertions;
 public class GameDeiver : MonoBehaviour
 {
     public CardBank startingDack;
+    public Canvas canvas;
+    private Camera mainCamera;
 
     [Header("Managers")]
     [SerializeField] private CardManager cardManager;
@@ -23,6 +25,8 @@ public class GameDeiver : MonoBehaviour
     private GameObject player;
     private List<GameObject> enemies = new List<GameObject>();
 
+    [SerializeField] private GameObject hpWidget;
+
     [Header("Character Pivots")]
     [SerializeField] private Transform enemyPivot;
     [SerializeField] private AssetReference enemyTemplate;
@@ -34,6 +38,7 @@ public class GameDeiver : MonoBehaviour
 
     private void Start()
     {
+        mainCamera = Camera.main;
         cardManager.Initialize();
         CreatePlayer(playerTemplate);
         CreateEnemy(enemyTemplate);
@@ -87,6 +92,8 @@ public class GameDeiver : MonoBehaviour
             var enemy = Instantiate(template.Prefab, pivot);
             Assert.IsNotNull(enemy);
 
+            CreateHpWidget(hpWidget, enemy, 20, 20);
+
             var obj = enemy.GetComponent<CharacterObject>();
             obj.characterTemplate = template;
             obj.Character = new RuntimeCharacter
@@ -119,5 +126,15 @@ public class GameDeiver : MonoBehaviour
         }
         cardSelectionHasArrow.Initialize(playerCharacter, enemyCharacters);
         effectResolutionManager.Initialize(playerCharacter, enemyCharacters);
+    }
+
+    private void CreateHpWidget(GameObject prefab, GameObject character, int hp, int maxHp)
+    {
+        var hpObj = Instantiate(prefab, canvas.transform, false);
+        var pivot = character.transform;
+        var canvasPosition = mainCamera.WorldToViewportPoint(pivot.position + new Vector3(0.0f, -0.3f, 0.0f));
+        hpObj.GetComponent<RectTransform>().anchorMin = canvasPosition;
+        hpObj.GetComponent<RectTransform>().anchorMax = canvasPosition;
+        hpObj.GetComponent<HpWidget>().Initialize(hp, maxHp);
     }
 }

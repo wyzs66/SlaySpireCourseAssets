@@ -8,6 +8,7 @@ using UnityEngine;
 public class EffectResolutionManager : BaseManager
 {
     private CharacterObject _currentEnemy;
+    public CardSelectionHasArrow cardSelectionHasArrow;
 
     public void ResolveCardEffects(RuntimeCard card, CharacterObject playerSelectedTarget)
     {
@@ -21,6 +22,23 @@ public class EffectResolutionManager : BaseManager
                 foreach(var target in targets)
                 {
                     targetableEffect.Resolve(Player.Character, target.Character);
+
+                    foreach(var groupManager in targetableEffect.SourceActions)
+                    {
+                        foreach(var group in groupManager.Group.Actions)
+                        {
+                            group.Execute(Player.gameObject);
+                        }
+                    }
+
+                    foreach (var groupManager in targetableEffect.TargetActions)
+                    {
+                        foreach (var group in groupManager.Group.Actions)
+                        {
+                            var enemy = cardSelectionHasArrow.GetSelectedEnemy();
+                            group.Execute(enemy.gameObject);
+                        }
+                    }
                 }
             }
         }

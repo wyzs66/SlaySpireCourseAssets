@@ -138,4 +138,9 @@ public class CardSelectionHasArrow : CardSelectionBase
             });
         }
     }
+
+    public GameObject GetSelectedEnemy()
+    {
+        return _selectedEnemy;
+    }
 }
