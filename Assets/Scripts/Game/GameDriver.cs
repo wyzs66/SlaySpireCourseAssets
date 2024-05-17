@@ -5,7 +5,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
 
 /// <summary>
-/// 游戏类
+/// 游戏进程类
 /// </summary>
 public class GameDeiver : MonoBehaviour
 {
@@ -34,6 +34,9 @@ public class GameDeiver : MonoBehaviour
     [Header("Character Pivots")]
     [SerializeField] private Transform playerPivot;
     [SerializeField] private AssetReference playerTemplate;
+
+    [SerializeField] private IntVariable enemyHp;
+    [SerializeField] private IntVariable playerHp;
 
 
     private void Start()
@@ -68,7 +71,7 @@ public class GameDeiver : MonoBehaviour
             obj.characterTemplate = template;
             obj.Character = new RuntimeCharacter
             {
-                Hp = 100,
+                Hp = playerHp,
                 Shield = 100,
                 Mana = 100,
                 MaxHp = 100,
@@ -92,13 +95,14 @@ public class GameDeiver : MonoBehaviour
             var enemy = Instantiate(template.Prefab, pivot);
             Assert.IsNotNull(enemy);
 
-            CreateHpWidget(hpWidget, enemy, 20, 20);
+            enemyHp.Value = 20;
+            CreateHpWidget(hpWidget, enemy, enemyHp, 20);
 
             var obj = enemy.GetComponent<CharacterObject>();
             obj.characterTemplate = template;
             obj.Character = new RuntimeCharacter
             {
-                Hp = 100,
+                Hp = enemyHp,
                 Shield = 100,
                 Mana = 100,
                 MaxHp = 100,
@@ -128,7 +132,14 @@ public class GameDeiver : MonoBehaviour
         effectResolutionManager.Initialize(playerCharacter, enemyCharacters);
     }
 
-    private void CreateHpWidget(GameObject prefab, GameObject character, int hp, int maxHp)
+    /// <summary>
+    /// 创建血条
+    /// </summary>
+    /// <param name="prefab"></param>
+    /// <param name="character"></param>
+    /// <param name="hp"></param>
+    /// <param name="maxHp"></param>
+    private void CreateHpWidget(GameObject prefab, GameObject character, IntVariable hp, int maxHp)
     {
         var hpObj = Instantiate(prefab, canvas.transform, false);
         var pivot = character.transform;

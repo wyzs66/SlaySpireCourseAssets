@@ -26,6 +26,25 @@ public class CardObject : MonoBehaviour
     private int _sortingOder;
     private SortingGroup _sortingGroup;
 
+    public enum CardState
+    {
+        InHand, //手牌中
+        AboutToBePlayed //将要使用的卡牌
+    }
+
+    public CardState _curentState;
+    public CardState State => _curentState;
+
+    public void SetState(CardState state)
+    {
+        _curentState = state;
+    }
+
+    private void OnEnable()
+    {
+        SetState(CardState.InHand);
+    }
+
     private void Awake()
     {
         _sortingGroup = gameObject.GetComponent<SortingGroup>();

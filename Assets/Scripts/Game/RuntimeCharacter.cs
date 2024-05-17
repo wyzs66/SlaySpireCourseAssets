@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class RuntimeCharacter
 {
-    public int Hp;
+    public IntVariable Hp;
     public int Shield;
     public int Mana;
     public int MaxHp;

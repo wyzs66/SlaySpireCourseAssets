@@ -18,9 +18,15 @@ public class CardSelectionNoArrow : CardSelectionBase
     private const float cardCancelAnimationTime = 0.2f;
     private const Ease cardAnimationEase = Ease.OutBack;
 
+    private const float cardAboutToBePlayedOffsetY = 1.5f;//选择要打出的牌时，鼠标Y轴偏移量，达到时将牌打出
+    private const float cardAnimationTime = 0.2f;//将要打出的牌动作时间
+    [SerializeField] private BoxCollider2D cardArea;//打出的效果牌，在效果产生时，卡牌存放区域
+
+    private bool isCardAboutToBePlayed;
+
     private void Update()
     {
-        if (cardDisplayManager.isCardMove())
+        if (cardDisplayManager.isCardMove() || isCardAboutToBePlayed)
             return;
 
         if(Input.GetMouseButtonDown(0) && selecteCard == null)
@@ -48,10 +54,15 @@ public class CardSelectionNoArrow : CardSelectionBase
 
         if(hitInfo.collider != null)
         {
-            selecteCard = hitInfo.collider.gameObject;
-            originalCardPosition = selecteCard.transform.position;
-            originalCardRotation = selecteCard.transform.rotation;
-            originalCardSortingOder = selecteCard.GetComponent<SortingGroup>().sortingOrder;
+            var card = hitInfo.collider.GetComponent<CardObject>();
+            var cardTemplate = card.template;
+            if (!CardUtils.CarHasTargetableEffect(cardTemplate))
+            {
+                selecteCard = hitInfo.collider.gameObject;
+                originalCardPosition = selecteCard.transform.position;
+                originalCardRotation = selecteCard.transform.rotation;
+                originalCardSortingOder = selecteCard.GetComponent<SortingGroup>().sortingOrder;
+            }
         }
     }
 

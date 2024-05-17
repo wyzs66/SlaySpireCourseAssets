@@ -19,10 +19,10 @@ public class HpWidget : MonoBehaviour
 
     private int maxValue;
 
-    public void Initialize(int hp, int max)
+    public void Initialize(IntVariable hp, int max)
     {
         maxValue = max;
-        SetHp(hp);
+        SetHp(hp.Value);
     }
 
     private void SetHp(int hp)
