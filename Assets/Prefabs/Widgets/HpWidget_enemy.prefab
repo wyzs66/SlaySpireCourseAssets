@@ -96,6 +96,14 @@ PrefabInstance:
       propertyPath: Event
       value: 
       objectReference: {fileID: 11400000, guid: 1380f06144469b74e9de25067c5bd45e, type: 2}
+    - target: {fileID: 3562476591358107940, guid: ad73e723a8b7e479aa17468702bfd512, type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6211176102322612214, guid: ad73e723a8b7e479aa17468702bfd512, type: 3}
+      propertyPath: Event
+      value: 
+      objectReference: {fileID: 11400000, guid: eb5116c234210a54b86e534cfba99a12, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

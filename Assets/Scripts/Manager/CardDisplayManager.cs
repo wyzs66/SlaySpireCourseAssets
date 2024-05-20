@@ -191,6 +191,10 @@ public class CardDisplayManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 将使用的卡牌移动到牌堆
+    /// </summary>
+    /// <param name="gameObject"></param>
     public void MoveCardToDisCardPile(GameObject gameObject)
     {
         var seq = DOTween.Sequence();

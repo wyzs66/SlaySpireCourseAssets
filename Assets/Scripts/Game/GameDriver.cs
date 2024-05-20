@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +10,15 @@ using UnityEngine.Assertions;
 /// </summary>
 public class GameDeiver : MonoBehaviour
 {
+    //初始牌堆
     public CardBank startingDack;
+
     public Canvas canvas;
     private Camera mainCamera;
+
+    //设置鼠标
+    public Texture2D cursorTexture2D;
+    public CursorMode cursorMode = CursorMode.Auto;
 
     [Header("Managers")]
     [SerializeField] private CardManager cardManager;
@@ -19,13 +26,15 @@ public class GameDeiver : MonoBehaviour
     [SerializeField] private CardDisplayManager cardDisplayManager;
     [SerializeField] private EffectResolutionManager effectResolutionManager;
     [SerializeField] private CardSelectionHasArrow cardSelectionHasArrow;
+    [SerializeField] private TurnManager turnManager;
 
     private List<CardTemplate> _playerDeck = new List<CardTemplate>();
 
     private GameObject player;
     private List<GameObject> enemies = new List<GameObject>();
 
-    [SerializeField] private GameObject hpWidget;
+    [SerializeField] private GameObject enemyHpWidget;//敌人血条UI
+    [SerializeField] private GameObject playerHpWidget;//玩家血条UI
 
     [Header("Character Pivots")]
     [SerializeField] private Transform enemyPivot;
@@ -38,13 +47,25 @@ public class GameDeiver : MonoBehaviour
     [SerializeField] private IntVariable enemyHp;
     [SerializeField] private IntVariable playerHp;
 
+    [SerializeField] private IntVariable enemyShield;//敌人护盾值
+    [SerializeField] private IntVariable playerShield;//玩家护盾值
+
 
     private void Start()
     {
+        SetCursor();
         mainCamera = Camera.main;
         cardManager.Initialize();
         CreatePlayer(playerTemplate);
         CreateEnemy(enemyTemplate);
+    }
+
+    private void SetCursor()
+    {
+        var x = cursorTexture2D.width / 2.0f;
+        var y = cursorTexture2D.height / 2.0f;
+        Cursor.SetCursor(cursorTexture2D, new Vector2(x, y), cursorMode);
+
     }
 
     /// <summary>
@@ -58,6 +79,9 @@ public class GameDeiver : MonoBehaviour
             var template = operationResult.Result;
             player = Instantiate(template.Prefab, playerPivot);
             Assert.IsNotNull(player);
+            playerHp.Value = 20;
+            playerShield.Value = 0;
+            CreateHpWidget(playerHpWidget, player, playerHp, 30, playerShield);
 
             foreach (var item in template.StartDeck.Items)
             {
@@ -72,7 +96,7 @@ public class GameDeiver : MonoBehaviour
             obj.Character = new RuntimeCharacter
             {
                 Hp = playerHp,
-                Shield = 100,
+                Shield = playerShield,
                 Mana = 100,
                 MaxHp = 100,
             };
@@ -96,14 +120,15 @@ public class GameDeiver : MonoBehaviour
             Assert.IsNotNull(enemy);
 
             enemyHp.Value = 20;
-            CreateHpWidget(hpWidget, enemy, enemyHp, 20);
+            enemyShield.Value = 0;
+            CreateHpWidget(enemyHpWidget, enemy, enemyHp, 20, enemyShield);
 
             var obj = enemy.GetComponent<CharacterObject>();
             obj.characterTemplate = template;
             obj.Character = new RuntimeCharacter
             {
                 Hp = enemyHp,
-                Shield = 100,
+                Shield = enemyShield,
                 Mana = 100,
                 MaxHp = 100,
             };
@@ -130,6 +155,7 @@ public class GameDeiver : MonoBehaviour
         }
         cardSelectionHasArrow.Initialize(playerCharacter, enemyCharacters);
         effectResolutionManager.Initialize(playerCharacter, enemyCharacters);
+        turnManager.BeginGame();
     }
 
     /// <summary>
@@ -139,13 +165,13 @@ public class GameDeiver : MonoBehaviour
     /// <param name="character"></param>
     /// <param name="hp"></param>
     /// <param name="maxHp"></param>
-    private void CreateHpWidget(GameObject prefab, GameObject character, IntVariable hp, int maxHp)
+    private void CreateHpWidget(GameObject prefab, GameObject character, IntVariable hp, int maxHp, IntVariable shield)
     {
         var hpObj = Instantiate(prefab, canvas.transform, false);
         var pivot = character.transform;
         var canvasPosition = mainCamera.WorldToViewportPoint(pivot.position + new Vector3(0.0f, -0.3f, 0.0f));
         hpObj.GetComponent<RectTransform>().anchorMin = canvasPosition;
         hpObj.GetComponent<RectTransform>().anchorMax = canvasPosition;
-        hpObj.GetComponent<HpWidget>().Initialize(hp, maxHp);
+        hpObj.GetComponent<HpWidget>().Initialize(hp, maxHp, shield);
     }
 }

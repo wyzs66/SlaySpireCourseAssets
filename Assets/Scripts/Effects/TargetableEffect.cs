@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 攻击目标
+/// 对目标实现卡牌的效果
 /// </summary>
 public abstract class TargetableEffect : Effect
 {

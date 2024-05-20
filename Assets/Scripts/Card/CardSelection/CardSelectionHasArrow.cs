@@ -109,6 +109,9 @@ public class CardSelectionHasArrow : CardSelectionBase
         }
     }
 
+    /// <summary>
+    /// 处理卡牌释放后的动画，并将卡牌的效果实现
+    /// </summary>
     protected override void PlaySelectedCard()
     {
         base.PlaySelectedCard();
@@ -147,5 +150,10 @@ public class CardSelectionHasArrow : CardSelectionBase
     public GameObject GetSelectedEnemy()
     {
         return _selectedEnemy;
+    }
+
+    public bool isSelectedCard()
+    {
+        return selecteCard != null;
     }
 }

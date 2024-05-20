@@ -8,7 +8,7 @@ using UnityEngine;
 public class RuntimeCharacter
 {
     public IntVariable Hp;
-    public int Shield;
+    public IntVariable Shield;
     public int Mana;
     public int MaxHp;
 }

@@ -67,14 +67,58 @@ public class CardSelectionNoArrow : CardSelectionBase
     }
 
     /// <summary>
-    /// 更新选中卡牌位置，跟随鼠标移动
+    /// 根据卡牌状态更新选中卡牌位置，跟随鼠标移动
     /// </summary>
     private void UpdateSelecteCard()
     {
-        var mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0;
+        var card = selecteCard.GetComponent<CardObject>();
+        if (Input.GetMouseButtonUp(0))
+        {
+            //卡牌处于将要打出的状态
+            if(card.State == CardObject.CardState.AboutToBePlayed)
+            {
+                //关闭卡牌跟随鼠标效果
+                isCardAboutToBePlayed = true;
 
-        selecteCard.transform.position = mousePosition;
+                //播放动画，将卡牌移动到释放区域
+                var sequence = DOTween.Sequence();
+                sequence.Append(selecteCard.transform.DOMove(cardArea.bounds.center, cardAnimationTime)).SetEase(cardAnimationEase);
+                sequence.AppendInterval(cardAnimationTime + 0.1f);
+                sequence.AppendCallback(() =>
+                {
+                    PlaySelectedCard();
+                    selecteCard = null;
+                    isCardAboutToBePlayed = false;
+                }); 
+                selecteCard.transform.DORotate(Vector3.zero, cardAnimationTime);
+            }
+            else
+            {
+                card.SetState(CardObject.CardState.InHand);
+                card.Reset(() =>
+                {
+                    selecteCard = null;
+                });
+            }
+        }
+
+        if(selecteCard != null)
+        {
+            var mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 0;
+
+            selecteCard.transform.position = mousePosition;
+
+            //当选择卡牌后，鼠标Y值偏移量达到阈值后，设置卡牌状态
+            if (mousePosition.y > originalCardPosition.y + cardAboutToBePlayedOffsetY)
+            {
+                card.SetState(CardObject.CardState.AboutToBePlayed);
+            }
+            else
+            {
+                card.SetState(CardObject.CardState.InHand);
+            }
+        }
     }
 
     /// <summary>
@@ -99,5 +143,20 @@ public class CardSelectionNoArrow : CardSelectionBase
             });
             
         }
+    }
+    /// <summary>
+    /// 处理卡牌释放后的动画，并将卡牌的效果实现
+    /// </summary>
+    protected override void PlaySelectedCard()
+    {
+        base.PlaySelectedCard();
+        var card = selecteCard.GetComponent<CardObject>().runtimeCard;
+        effectResolutionManager.ResolveCardEffects(card);
+
+    }
+
+    public bool isSelectedCard()
+    {
+        return selecteCard != null;
     }
 }

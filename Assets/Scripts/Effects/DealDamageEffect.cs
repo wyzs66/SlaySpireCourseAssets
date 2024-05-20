@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-[CreateAssetMenu(fileName = "IntegerEffect", menuName = "CardGame/Templates/IntegerEffect", order = 4)]
+/// <summary>
+/// 对目标照成伤害的效果类
+/// </summary>
+[CreateAssetMenu(fileName = "DealDamageEffect", menuName = "CardGame/Templates/IntegerEffect/Deal Damage Effect", order = 4)]
+[Serializable]
 public class DealDamageEffect : IntegerEffect, IEntityEffect
 {
     public override string GetName()

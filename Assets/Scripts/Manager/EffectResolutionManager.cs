@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +45,23 @@ public class EffectResolutionManager : BaseManager
         }
     }
 
+    public void ResolveCardEffects(RuntimeCard card)
+    {
+        foreach (var effect in card.Template.Effects)
+        {
+            var targetableEffect = effect as TargetableEffect;
+
+            if (targetableEffect != null)
+            {
+                var targets = GetTargets(targetableEffect, null, true);
+                foreach (var target in targets)
+                {
+                    targetableEffect.Resolve(Player.Character, target.Character);
+                }
+            }
+        }
+    }
+
     /// <summary>
     /// 获取对象发起动作的目标对象列表
     /// </summary>
@@ -82,4 +100,6 @@ public class EffectResolutionManager : BaseManager
         }
         return targets;
     }
+
+   
 }

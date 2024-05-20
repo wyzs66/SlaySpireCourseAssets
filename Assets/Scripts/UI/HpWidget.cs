@@ -16,15 +16,40 @@ public class HpWidget : MonoBehaviour
     [SerializeField] private Image hpBarBackGround;
     [SerializeField] private TextMeshProUGUI hpText;
     [SerializeField] private TextMeshProUGUI hpBorderText;
+    [SerializeField] private GameObject shiledGroup;
+    [SerializeField] private TextMeshProUGUI shiledText;
+    [SerializeField] private TextMeshProUGUI shiledBorderText;
+    
 
     private int maxValue;
 
-    public void Initialize(IntVariable hp, int max)
+    public void Initialize(IntVariable hp, int max, IntVariable shiled)
     {
         maxValue = max;
         SetHp(hp.Value);
+        SetShield(shiled.Value);
     }
 
+    /// <summary>
+    /// 设置盾牌数值
+    /// </summary>
+    /// <param name="value">数值大小</param>
+    private void SetShield(int value)
+    {
+        shiledText.text = $"{value.ToString()}";
+        shiledBorderText.text = $"{value.ToString()}";
+        SetShiledActive(value > 0);
+    }
+
+    private void SetShiledActive(bool v)
+    {
+        shiledGroup.SetActive(v);
+    }
+
+    /// <summary>
+    /// 设置生命值
+    /// </summary>
+    /// <param name="hp"></param>
     private void SetHp(int hp)
     {
         var newHp = hp / (float)maxValue;
@@ -46,5 +71,9 @@ public class HpWidget : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+    }
+    public void OnChangedShield(int value)
+    {
+        SetShield(value);
     }
 }
