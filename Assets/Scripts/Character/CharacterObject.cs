@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class CharacterObject : MonoBehaviour
 {
-    public CharacterTemplate characterTemplate;
+    public CharacterTemplate Template;
     public RuntimeCharacter Character;
 }

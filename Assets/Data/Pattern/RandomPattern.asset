@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c04c0fbbaa46fdf4583848f47e52d630, type: 3}
+  m_Name: RandomPattern
+  m_EditorClassIdentifier: 
+  Effects:
+  - {fileID: 11400000, guid: 331d8504c66c0194aa876d6a1d15c3ec, type: 2}
+  - {fileID: 11400000, guid: 3934de8857e4c8840acec69b5ea215d2, type: 2}
+  Probabilities:
+  - Value: 75
+  - Value: 25

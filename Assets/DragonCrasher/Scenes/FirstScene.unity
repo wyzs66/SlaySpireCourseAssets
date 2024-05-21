@@ -571,6 +571,7 @@ MonoBehaviour:
   effectResolutionManager: {fileID: 1526704876}
   cardSelectionHasArrow: {fileID: 1719855946}
   turnManager: {fileID: 1718328480}
+  enemyAIManager: {fileID: 1927159809}
   enemyHpWidget: {fileID: 5237128391078363174, guid: 653ae5863ff63d546b79822d7b42be9f, type: 3}
   playerHpWidget: {fileID: 5024264554649771728, guid: c3bcd902e1b31ab45b50d5b5e3bad672, type: 3}
   enemyPivot: {fileID: 261993681}
@@ -891,8 +892,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0
   m_LocalBounds:
-    m_Center: {x: 0.06655002, y: -0.063599944, z: 0}
-    m_Extent: {x: 2.60725, y: 3.7887, z: 0}
+    m_Center: {x: 0.057899952, y: -0.052600026, z: 0}
+    m_Extent: {x: 2.6055, y: 3.7887, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -1700,8 +1701,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0
   m_LocalBounds:
-    m_Center: {x: -0.9245, y: 2.08475, z: 0}
-    m_Extent: {x: 10.4119, y: 5.1199503, z: 0}
+    m_Center: {x: -0.92719984, y: 2.09445, z: 0}
+    m_Extent: {x: 10.4226, y: 5.12025, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -2929,6 +2930,7 @@ Transform:
   - {fileID: 1719855945}
   - {fileID: 1526704875}
   - {fileID: 1718328479}
+  - {fileID: 1927159806}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1624685717 stripped
@@ -3002,8 +3004,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0
   m_LocalBounds:
-    m_Center: {x: 0.061699986, y: -0.05914998, z: 0}
-    m_Extent: {x: 2.6016998, y: 3.79455, z: 0}
+    m_Center: {x: 0.06580007, y: -0.055750012, z: 0}
+    m_Extent: {x: 2.6086001, y: 3.78785, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -3494,6 +3496,109 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!1 &1927159805
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1927159806}
+  - component: {fileID: 1927159809}
+  - component: {fileID: 1927159808}
+  - component: {fileID: 1927159807}
+  m_Layer: 0
+  m_Name: EnemyAIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1927159806
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927159805}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1592748350}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1927159807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927159805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 123edc2b1474d8e41b6c5a597aeec081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: c59d4fb4c57eace46899a6dc124e65b4, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1927159809}
+        m_TargetAssemblyTypeName: EnemyAIManager, Assembly-CSharp
+        m_MethodName: OnEnemyBegan
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1927159808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927159805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 123edc2b1474d8e41b6c5a597aeec081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 37740417562df764aa5da217c3598624, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1927159809}
+        m_TargetAssemblyTypeName: EnemyAIManager, Assembly-CSharp
+        m_MethodName: OnPlayerTurnBegin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1927159809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927159805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29a9b0ac58be13e4a92ccfed3d5ad9d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectResolutionManager: {fileID: 1526704876}
 --- !u!1 &1927308110
 GameObject:
   m_ObjectHideFlags: 0
@@ -4951,8 +5056,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 1
   m_ShadowVolumeIntensity: 0.119
   m_LocalBounds:
-    m_Center: {x: 0.27559996, y: 0.062250137, z: 0}
-    m_Extent: {x: 9.611, y: 4.29735, z: 0}
+    m_Center: {x: 0.28055, y: 0.058700085, z: 0}
+    m_Extent: {x: 9.61825, y: 4.2947, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -7005,8 +7110,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 1
   m_ShadowVolumeIntensity: 0.119
   m_LocalBounds:
-    m_Center: {x: -0.04094982, y: 0.3922, z: 0}
-    m_Extent: {x: 9.44015, y: 4.6323, z: 0}
+    m_Center: {x: -0.044750214, y: 0.39645004, z: 0}
+    m_Extent: {x: 9.43715, y: 4.62855, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -7369,8 +7474,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0
   m_LocalBounds:
-    m_Center: {x: 4.1943, y: -0.24335003, z: 0}
-    m_Extent: {x: 7.8531003, y: 2.96915, z: 0}
+    m_Center: {x: 4.2042503, y: -0.23629999, z: 0}
+    m_Extent: {x: 7.84445, y: 2.9804, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0

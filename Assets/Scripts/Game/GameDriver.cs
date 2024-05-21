@@ -7,6 +7,7 @@ using UnityEngine.Assertions;
 
 /// <summary>
 /// 游戏进程类
+/// 游戏的主入口，各个系统的初始化从这里开始
 /// </summary>
 public class GameDeiver : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class GameDeiver : MonoBehaviour
     [SerializeField] private EffectResolutionManager effectResolutionManager;
     [SerializeField] private CardSelectionHasArrow cardSelectionHasArrow;
     [SerializeField] private TurnManager turnManager;
+    [SerializeField] private EnemyAIManager enemyAIManager;
 
     private List<CardTemplate> _playerDeck = new List<CardTemplate>();
 
@@ -92,7 +94,7 @@ public class GameDeiver : MonoBehaviour
             }
 
             var obj = player.GetComponent<CharacterObject>();
-            obj.characterTemplate = template;
+            obj.Template = template;
             obj.Character = new RuntimeCharacter
             {
                 Hp = playerHp,
@@ -108,7 +110,7 @@ public class GameDeiver : MonoBehaviour
     /// <summary>
     /// 异步加载敌人
     /// </summary>
-    /// <param name="templateReference"></param>
+    /// <param name="templateReference">敌人的基础模板</param>
     private void CreateEnemy(AssetReference templateReference)
     {
         var handle = Addressables.LoadAssetAsync<EnemyTemplate>(templateReference);
@@ -124,7 +126,7 @@ public class GameDeiver : MonoBehaviour
             CreateHpWidget(enemyHpWidget, enemy, enemyHp, 20, enemyShield);
 
             var obj = enemy.GetComponent<CharacterObject>();
-            obj.characterTemplate = template;
+            obj.Template = template;
             obj.Character = new RuntimeCharacter
             {
                 Hp = enemyHp,
@@ -137,7 +139,7 @@ public class GameDeiver : MonoBehaviour
     }
 
     /// <summary>
-    /// 创建初始摸牌堆，洗牌，并抽取初始手牌
+    /// 各个系统的初始化
     /// </summary>
     private void Initialize()
     {
@@ -154,6 +156,7 @@ public class GameDeiver : MonoBehaviour
             enemyCharacters.Add(enemy.GetComponent<CharacterObject>());
         }
         cardSelectionHasArrow.Initialize(playerCharacter, enemyCharacters);
+        enemyAIManager.Initialize(playerCharacter, enemyCharacters);
         effectResolutionManager.Initialize(playerCharacter, enemyCharacters);
         turnManager.BeginGame();
     }
@@ -161,10 +164,11 @@ public class GameDeiver : MonoBehaviour
     /// <summary>
     /// 创建血条
     /// </summary>
-    /// <param name="prefab"></param>
-    /// <param name="character"></param>
-    /// <param name="hp"></param>
-    /// <param name="maxHp"></param>
+    /// <param name="prefab">血条预制体</param>
+    /// <param name="character">血条的目标实体</param>
+    /// <param name="hp">血条当前血量</param>
+    /// <param name="maxHp">最大血量</param>
+    /// <param name="shield">护盾值</param>
     private void CreateHpWidget(GameObject prefab, GameObject character, IntVariable hp, int maxHp, IntVariable shield)
     {
         var hpObj = Instantiate(prefab, canvas.transform, false);

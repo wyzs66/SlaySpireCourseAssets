@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Skeleton
   Prefab: {fileID: 8288431692075836191, guid: a3088aa92a6fbd148a935431f6212edf, type: 3}
+  patterns:
+  - {fileID: 11400000, guid: 8d7a66de2a1670b4b89bb535cbd78d36, type: 2}
+  - {fileID: 11400000, guid: 41188768a1dfdf6448459fece4383598, type: 2}

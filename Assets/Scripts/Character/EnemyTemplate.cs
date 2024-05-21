@@ -7,5 +7,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Enemy", menuName = "CardGame/Templates/Enemy", order = 2)]
 public class EnemyTemplate : CharacterTemplate
 {
-
+    public List<Pattern> patterns = new List<Pattern>();
 }

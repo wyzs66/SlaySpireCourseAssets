@@ -16,6 +16,9 @@ public class TurnIndicatorManager : MonoBehaviour
     private const float OutAnimationTime = 0.6f;
     private const float PauseAnimationTime = 2.0f;
 
+    /// <summary>
+    /// 显示玩家回合UI
+    /// </summary>
     public void OnPlayerIndicator()
     {
         text.text = "Player Turn";
@@ -25,6 +28,9 @@ public class TurnIndicatorManager : MonoBehaviour
         seq.Append(turnIndicator.GetComponent<RectTransform>().DOScale(0.0f, OutAnimationTime));
     }
 
+    /// <summary>
+    /// 显示敌人回合UI
+    /// </summary>
     public void OnEnemyIndicator()
     {
         text.text = "Enemy Turn";
