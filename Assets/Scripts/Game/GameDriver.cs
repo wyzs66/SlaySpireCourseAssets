@@ -38,6 +38,7 @@ public class GameDeiver : MonoBehaviour
     [SerializeField] private GameObject enemyHpWidget;//敌人血条UI
     [SerializeField] private GameObject playerHpWidget;//玩家血条UI
     [SerializeField] private GameObject IntentWidget;//敌人下一步动作UI
+    [SerializeField] private GameObject PlaterStatusWidget;//玩家身上BUFFUI
 
     [Header("Character Pivots")]
     [SerializeField] private Transform enemyPivot;
@@ -52,6 +53,8 @@ public class GameDeiver : MonoBehaviour
 
     [SerializeField] private IntVariable enemyShield;//敌人护盾值
     [SerializeField] private IntVariable playerShield;//玩家护盾值
+
+    [SerializeField] private StatusVariable playerStatusVariable;//玩家BUFF
 
 
     private void Start()
@@ -85,6 +88,7 @@ public class GameDeiver : MonoBehaviour
             playerHp.Value = 20;
             playerShield.Value = 0;
             CreateHpWidget(playerHpWidget, player, playerHp, 30, playerShield);
+            CreateStatusWidget(PlaterStatusWidget, player);
 
             foreach (var item in template.StartDeck.Items)
             {
@@ -100,9 +104,12 @@ public class GameDeiver : MonoBehaviour
             {
                 Hp = playerHp,
                 Shield = playerShield,
+                Status = playerStatusVariable,
                 Mana = 100,
                 MaxHp = 100,
             };
+            obj.Character.Status.Value.Clear();
+
             Initialize();
         };
         
@@ -195,5 +202,14 @@ public class GameDeiver : MonoBehaviour
         var canvasPosition = mainCamera.WorldToViewportPoint(pivot.position + new Vector3(0.2f, size.y + 0.7f, 0.0f));
         widget.GetComponent<RectTransform>().anchorMin = canvasPosition;
         widget.GetComponent<RectTransform>().anchorMax = canvasPosition;
+    }
+
+    private void CreateStatusWidget(GameObject prefab, GameObject character) 
+    {
+        var hpObj = Instantiate(prefab, canvas.transform, false);
+        var pivot = character.transform;
+        var canvasPosition = mainCamera.WorldToViewportPoint(pivot.position + new Vector3(0.0f, -0.8f, 0.0f));
+        hpObj.GetComponent<RectTransform>().anchorMin = canvasPosition;
+        hpObj.GetComponent<RectTransform>().anchorMax = canvasPosition;
     }
 }

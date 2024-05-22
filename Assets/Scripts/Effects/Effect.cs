@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 攻击效果的基类
+/// 卡牌效果的基类
 /// </summary>
 public abstract class Effect : ScriptableObject
 {

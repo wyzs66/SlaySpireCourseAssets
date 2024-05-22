@@ -19,15 +19,36 @@ public class DealDamageEffect : IntegerEffect, IEntityEffect
     {
         var targetHp = target.Hp;
         var hp = targetHp.Value;
+
+        var targetShield = target.Shield;
+        var shield = targetShield.Value;
+
         var damage = Value;
         Debug.Log( "Deal Damage:" + damage);
 
-        var newHp = hp - damage;
-        if (newHp < 0)
+        if(source.Status != null)
         {
-            newHp = 0;
+            var weak = source.Status.GetValue("Weak");
+            if(weak > 0)
+            {
+                damage = (int)Mathf.Floor(damage * 0.75f);
+            }
         }
 
-        targetHp.SetValue(newHp);
+        if(damage > shield)
+        {
+            var newHp = hp - (damage - shield);
+            if(newHp < 0) newHp = 0;
+            targetHp.SetValue(newHp);
+            targetShield.SetValue(0);
+
+        }
+        else
+        {
+            target.Shield.SetValue(shield -  damage);
+        }
+       
+
+        
     }
 }

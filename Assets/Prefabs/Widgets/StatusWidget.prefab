@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6004579814679689426}
   - component: {fileID: 4551970510096274879}
   - component: {fileID: 7060659839679049773}
+  - component: {fileID: 987906294950859260}
+  - component: {fileID: 695995496850299802}
   m_Layer: 5
   m_Name: StatusWidget
   m_TagString: Untagged
@@ -71,3 +73,44 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &987906294950859260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253467307405554335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72a937623195f524ab4bc74556e11afa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusElementPrefab: {fileID: 7295866821074086044, guid: f5c83973e929d45db8893b948b620a6b, type: 3}
+--- !u!114 &695995496850299802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253467307405554335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75897addde176e147924c7b6330201a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 0}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 987906294950859260}
+        m_TargetAssemblyTypeName: StatusWidget, Assembly-CSharp
+        m_MethodName: OnStatusChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

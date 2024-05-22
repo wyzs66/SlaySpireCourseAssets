@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9445d5b35304fa740b952be5aa175754, type: 3}
+  m_Name: ApplayStatusEffect_Weak
+  m_EditorClassIdentifier: 
+  SourceActions: []
+  TargetActions: []
+  TargetType: 1
+  Value: 1
+  Status: {fileID: 11400000, guid: 9307d3393b5bcf74c899033c89f5b519, type: 2}
