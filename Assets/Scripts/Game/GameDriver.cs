@@ -37,6 +37,7 @@ public class GameDeiver : MonoBehaviour
 
     [SerializeField] private GameObject enemyHpWidget;//敌人血条UI
     [SerializeField] private GameObject playerHpWidget;//玩家血条UI
+    [SerializeField] private GameObject IntentWidget;//敌人下一步动作UI
 
     [Header("Character Pivots")]
     [SerializeField] private Transform enemyPivot;
@@ -124,6 +125,7 @@ public class GameDeiver : MonoBehaviour
             enemyHp.Value = 20;
             enemyShield.Value = 0;
             CreateHpWidget(enemyHpWidget, enemy, enemyHp, 20, enemyShield);
+            CreateIntentWidget(IntentWidget, enemy);
 
             var obj = enemy.GetComponent<CharacterObject>();
             obj.Template = template;
@@ -177,5 +179,21 @@ public class GameDeiver : MonoBehaviour
         hpObj.GetComponent<RectTransform>().anchorMin = canvasPosition;
         hpObj.GetComponent<RectTransform>().anchorMax = canvasPosition;
         hpObj.GetComponent<HpWidget>().Initialize(hp, maxHp, shield);
+    }
+
+    /// <summary>
+    /// 创建敌人下一步行动的UI
+    /// </summary>
+    /// <param name="prefab">UI预制体</param>
+    /// <param name="character">目标</param>
+    private void CreateIntentWidget(GameObject prefab, GameObject character)
+    {
+        var widget = Instantiate(prefab, canvas.transform, false);
+        var pivot = character.transform;
+        var size = character.GetComponent<BoxCollider2D>().bounds.size;
+
+        var canvasPosition = mainCamera.WorldToViewportPoint(pivot.position + new Vector3(0.2f, size.y + 0.7f, 0.0f));
+        widget.GetComponent<RectTransform>().anchorMin = canvasPosition;
+        widget.GetComponent<RectTransform>().anchorMax = canvasPosition;
     }
 }

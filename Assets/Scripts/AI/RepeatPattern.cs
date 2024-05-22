@@ -10,6 +10,7 @@ using UnityEngine;
 public class RepeatPattern : Pattern
 {
     public int Times;//ÖØ¸´´ÎÊı
+    public Sprite Sprite;
     public override string GetName()
     {
         return $"Repeat x {Times.ToString()}";
