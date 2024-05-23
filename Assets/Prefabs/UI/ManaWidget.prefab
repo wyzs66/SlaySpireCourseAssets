@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 1562946282785023708}
   - component: {fileID: 1949866222285884225}
   - component: {fileID: 205028251974296410}
+  - component: {fileID: 8448029691038471862}
+  - component: {fileID: 5091412874429595769}
   m_Layer: 5
   m_Name: ManaWidget
   m_TagString: Untagged
@@ -77,6 +79,48 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8448029691038471862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815878460873847923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feaea9c772dede3498600ea327cebf75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 956442053817159950}
+  textBorder: {fileID: 733273536169635780}
+--- !u!114 &5091412874429595769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815878460873847923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b0a5d9c3ea603428b24d49c9e38c95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 3fbc8e9fe0c6f6c46a6ac058c69dfb65, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8448029691038471862}
+        m_TargetAssemblyTypeName: ManaWidget, Assembly-CSharp
+        m_MethodName: OnManaChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3826099728068739626
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,8 +13,10 @@ public abstract class CardSelectionBase : BaseManager
 
     public CardDisplayManager cardDisplayManager;
     public EffectResolutionManager effectResolutionManager;
+    public CardDeckManager deckManager;
 
     protected GameObject selecteCard;
+    public IntVariable playerMana;
     
 
     protected virtual void Start()
@@ -27,7 +29,11 @@ public abstract class CardSelectionBase : BaseManager
     /// </summary>
     protected virtual void PlaySelectedCard()
     {
+        var card = selecteCard.GetComponent<CardObject>();
+        var cardTemplate = card.template;
+        playerMana.SetValue(playerMana.Value - cardTemplate.Cost);
         cardDisplayManager.ReOrganizeHandCards(selecteCard);
         cardDisplayManager.MoveCardToDisCardPile(selecteCard);
+        deckManager.MoveCardToDisCardPile(card.runtimeCard);
     }
 }

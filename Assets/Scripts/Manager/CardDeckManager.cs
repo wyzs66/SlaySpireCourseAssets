@@ -8,13 +8,29 @@ using UnityEngine;
 public class CardDeckManager : MonoBehaviour
 {
     private List<RuntimeCard> _deck; //ÃþÅÆ¶Ñ
+    private List<RuntimeCard> _disCardPile; //ÆúÅÆ¶Ñ
+    private List<RuntimeCard> _hand; //ÊÖÅÆ
+
     private const int DeckCapacity = 30;//ÃþÅÆ¶ÑÊýÁ¿
+    private const int DisCardCapacity = 30;//ÆúÅÆ¶ÑÊýÁ¿
+    private const int HandCapacity = 30;//ÊÖÅÆÊýÁ¿
 
     public CardDisplayManager _displayManager;
+
+    private DeckWidget deckWidget;
+    private DisCardWidget disCardWidget;
 
     private void Awake()
     {
         _deck = new List<RuntimeCard>(DeckCapacity);
+        _disCardPile = new List<RuntimeCard>(DisCardCapacity);
+        _hand = new List<RuntimeCard>(HandCapacity);
+    }
+
+    public void Initialize(DeckWidget deckWidget, DisCardWidget disCardWidget)
+    {
+        this.deckWidget = deckWidget;
+        this.disCardWidget = disCardWidget;
     }
 
     /// <summary>
@@ -36,6 +52,8 @@ public class CardDeckManager : MonoBehaviour
             _deck.Add(card);
             deckSize++;
         }
+        deckWidget.SetAmount(_deck.Count);
+        disCardWidget.SetAmount(0);
     }
 
     /// <summary>
@@ -62,9 +80,42 @@ public class CardDeckManager : MonoBehaviour
             {
                 var card = _deck[0];
                 _deck.RemoveAt(0);
+                _hand.Add(card);
                 drawCards.Add(card);
             }
-            _displayManager.CreateHandCards(drawCards);
+            _displayManager.CreateHandCards(drawCards, previousDeckSize);
         }
+        else
+        {
+            for(int i = 0; i < _disCardPile.Count; i++)
+            {
+                _deck.Add(_disCardPile[i]);
+            }
+
+            _disCardPile.Clear();
+
+            _displayManager.UpdateDiscardSize(_disCardPile.Count);
+
+            if(amount > _deck.Count + _disCardPile.Count)
+            {
+                amount = _deck.Count + _disCardPile.Count;
+            }
+            DrawCardsFormDeck(amount);
+        }
+    }
+
+    public void MoveCardToDisCardPile(RuntimeCard card)
+    {
+        _hand.Remove(card);
+        _disCardPile.Add(card);
+    }
+
+    public void MoveCardsToDisCardPile()
+    {
+        foreach(var  card in _hand)
+        {
+            _disCardPile.Add(card);
+        }
+        _hand.Clear();
     }
 }

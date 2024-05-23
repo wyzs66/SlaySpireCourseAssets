@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4330734288737978545}
   - component: {fileID: 3867442025478758774}
   - component: {fileID: 7250837818009189361}
+  - component: {fileID: 8178496071853580168}
   m_Layer: 5
   m_Name: IntentWidget
   m_TagString: Untagged
@@ -140,6 +141,34 @@ MonoBehaviour:
       - m_Target: {fileID: 4330734288737978545}
         m_TargetAssemblyTypeName: IntentWidget, Assembly-CSharp
         m_MethodName: OnIntentChange
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8178496071853580168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253467307405554335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b0a5d9c3ea603428b24d49c9e38c95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 1380f06144469b74e9de25067c5bd45e, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4330734288737978545}
+        m_TargetAssemblyTypeName: IntentWidget, Assembly-CSharp
+        m_MethodName: OnHpChange
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

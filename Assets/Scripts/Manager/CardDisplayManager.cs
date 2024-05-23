@@ -16,6 +16,9 @@ public class CardDisplayManager : MonoBehaviour
 
     private CardManager _cardManager;
 
+    private DeckWidget _deckWidget;
+    private DisCardWidget _disCardWidget;
+
     private  List<Vector3> _positions;
     private  List<Quaternion> _rotations;
     private  List<int> _sortingOders;
@@ -29,9 +32,11 @@ public class CardDisplayManager : MonoBehaviour
     public bool isCardMoving = false;
     private float cardToDisCardPileAnimationTime = 0.3f;
 
-    public void Initialize(CardManager cardManager)
+    public void Initialize(CardManager cardManager, DeckWidget deckWidget, DisCardWidget disCardWidget)
     {
         _cardManager = cardManager;
+        _deckWidget = deckWidget;
+        _disCardWidget = disCardWidget;
     }
 
     private void Awake()
@@ -45,7 +50,7 @@ public class CardDisplayManager : MonoBehaviour
     /// 创建手牌的实例
     /// </summary>
     /// <param name="cardsInHand"></param>
-    public void CreateHandCards(List<RuntimeCard> cardsInHand)
+    public void CreateHandCards(List<RuntimeCard> cardsInHand, int size)
     {
         var drawCards = new List<GameObject>(cardsInHand.Count);
         foreach(var  card in cardsInHand)
@@ -54,6 +59,7 @@ public class CardDisplayManager : MonoBehaviour
             _handCards.Add(cardGameObject);
             drawCards.Add(cardGameObject);
         }
+        _deckWidget.SetAmount(size);
         PutDeckCardsToHands(drawCards);
     }
 
@@ -70,7 +76,7 @@ public class CardDisplayManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 卡牌刚创建时的移动
+    /// 摸牌时的移动动画
     /// </summary>
     /// <param name="drawCards"></param>
     private void PutDeckCardsToHands(List<GameObject> drawCards)
@@ -95,6 +101,7 @@ public class CardDisplayManager : MonoBehaviour
                 seq.AppendInterval(interval);
                 seq.AppendCallback(() =>
                 {
+                    _deckWidget.RemoveCard();
                     var move = card.transform.DOMove(_positions[j], time).OnComplete(() =>
                     {
                         cardObject.SaveTranform(_positions[j], _rotations[j]);
@@ -191,6 +198,14 @@ public class CardDisplayManager : MonoBehaviour
         }
     }
 
+    public void MoveCardToDisCardPile()
+    {
+        foreach(var card in _handCards)
+        {
+            MoveCardToDisCardPile(card);
+        }
+    }
+
     /// <summary>
     /// 将使用的卡牌移动到牌堆
     /// </summary>
@@ -200,6 +215,7 @@ public class CardDisplayManager : MonoBehaviour
         var seq = DOTween.Sequence();
         seq.AppendCallback(() =>
         {
+            _disCardWidget.Addcard();
             gameObject.transform.DOScale(Vector3.zero, cardToDisCardPileAnimationTime).OnComplete(() =>
             {
                 gameObject.GetComponent<CardManager.ManagerPooleObject>().cardManager.ReturnObject(gameObject);
@@ -209,5 +225,10 @@ public class CardDisplayManager : MonoBehaviour
         {
             _handCards.Remove(gameObject);
         });
+    }
+
+    public void UpdateDiscardSize(int count)
+    {
+        _disCardWidget.SetAmount(count);
     }
 }

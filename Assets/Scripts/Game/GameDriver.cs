@@ -29,6 +29,9 @@ public class GameDeiver : MonoBehaviour
     [SerializeField] private CardSelectionHasArrow cardSelectionHasArrow;
     [SerializeField] private TurnManager turnManager;
     [SerializeField] private EnemyAIManager enemyAIManager;
+    [SerializeField] private PlayerManaManager playerManaManager;
+    [SerializeField] private CharacterDeathManager characterDeathManager;
+    [SerializeField] private CharacterBuffManager characterBuffManager;
 
     private List<CardTemplate> _playerDeck = new List<CardTemplate>();
 
@@ -39,6 +42,9 @@ public class GameDeiver : MonoBehaviour
     [SerializeField] private GameObject playerHpWidget;//玩家血条UI
     [SerializeField] private GameObject IntentWidget;//敌人下一步动作UI
     [SerializeField] private GameObject PlaterStatusWidget;//玩家身上BUFFUI
+    [SerializeField] private ManaWidget PlaterManaWidget;//玩家魔法值UI
+    [SerializeField] private DeckWidget deckWidget;//摸牌堆UI
+    [SerializeField] private DisCardWidget disCardWidget;//弃牌堆UI
 
     [Header("Character Pivots")]
     [SerializeField] private Transform enemyPivot;
@@ -87,8 +93,12 @@ public class GameDeiver : MonoBehaviour
             Assert.IsNotNull(player);
             playerHp.Value = 20;
             playerShield.Value = 0;
+            playerManaManager.SetDefaultMana(3);
+
             CreateHpWidget(playerHpWidget, player, playerHp, 30, playerShield);
             CreateStatusWidget(PlaterStatusWidget, player);
+          
+            
 
             foreach (var item in template.StartDeck.Items)
             {
@@ -106,11 +116,12 @@ public class GameDeiver : MonoBehaviour
                 Shield = playerShield,
                 Status = playerStatusVariable,
                 Mana = 100,
-                MaxHp = 100,
+                MaxHp = 30,
             };
             obj.Character.Status.Value.Clear();
 
             Initialize();
+            PlaterManaWidget.Initialize(playerManaManager.playerManaVariable);
         };
         
     }
@@ -141,7 +152,7 @@ public class GameDeiver : MonoBehaviour
                 Hp = enemyHp,
                 Shield = enemyShield,
                 Mana = 100,
-                MaxHp = 100,
+                MaxHp = 20,
             };
             enemies.Add(enemy);
         };
@@ -152,10 +163,11 @@ public class GameDeiver : MonoBehaviour
     /// </summary>
     private void Initialize()
     {
+        cardDeckManager.Initialize(deckWidget, disCardWidget);
         cardDeckManager.LaodDeck(_playerDeck);
         cardDeckManager.DeckShuffle();
-        cardDisplayManager.Initialize(cardManager);
-        cardDeckManager.DrawCardsFormDeck(5);
+        cardDisplayManager.Initialize(cardManager, deckWidget, disCardWidget);
+        // cardDeckManager.DrawCardsFormDeck(5);
 
         var playerCharacter = player.GetComponent<CharacterObject>();
         var enemyCharacters = new List<CharacterObject>();
@@ -167,6 +179,8 @@ public class GameDeiver : MonoBehaviour
         cardSelectionHasArrow.Initialize(playerCharacter, enemyCharacters);
         enemyAIManager.Initialize(playerCharacter, enemyCharacters);
         effectResolutionManager.Initialize(playerCharacter, enemyCharacters);
+        characterDeathManager.Initialize(playerCharacter, enemyCharacters);
+        characterBuffManager.Initialize(playerCharacter, enemyCharacters);
         turnManager.BeginGame();
     }
 

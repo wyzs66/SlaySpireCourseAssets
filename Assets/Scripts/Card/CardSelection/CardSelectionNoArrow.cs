@@ -56,7 +56,8 @@ public class CardSelectionNoArrow : CardSelectionBase
         {
             var card = hitInfo.collider.GetComponent<CardObject>();
             var cardTemplate = card.template;
-            if (!CardUtils.CarHasTargetableEffect(cardTemplate))
+            if (CardUtils.CardCanToBePlayed(cardTemplate, playerMana)&&
+                !CardUtils.CarHasTargetableEffect(cardTemplate))
             {
                 selecteCard = hitInfo.collider.gameObject;
                 originalCardPosition = selecteCard.transform.position;

@@ -50,14 +50,14 @@ public class CardObject : MonoBehaviour
         _sortingGroup = gameObject.GetComponent<SortingGroup>();
     }
 
-    private void Start()
-    {
-        var card = new RuntimeCard
-        {
-            Template = template,
-        };
-        SetInfo(card);
-    }
+    //private void Start()
+    //{
+    //    var card = new RuntimeCard
+    //    {
+    //        Template = template,
+    //    };
+    //    SetInfo(card);
+    //}
 
     /// <summary>
     /// 写入卡牌元素数据

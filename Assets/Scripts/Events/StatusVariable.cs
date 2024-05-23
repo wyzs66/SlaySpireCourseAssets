@@ -18,12 +18,12 @@ public class StatusVariable : ScriptableObject
 
     public void SetValue(StatusTempelate status, int value)
     {
-        Value[status.Name] = value;
-        ValueChangedEvent?.Raise(status, value);
+            Value[status.Name] = value;
+            ValueChangedEvent?.Raise(status, value);
 
-        if(!Template.ContainsKey(status.Name))
-        {
-            Template.Add(status.Name, status);
-        }
+            if (!Template.ContainsKey(status.Name))
+            {
+                Template.Add(status.Name, status);
+            }
     }
 }

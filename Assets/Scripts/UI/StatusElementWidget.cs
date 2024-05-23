@@ -10,6 +10,7 @@ public class StatusElementWidget : MonoBehaviour
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI text;
     public string Type;
+    public int currentValue;
     private CanvasGroup canvasGroup;
 
     private void Awake()
@@ -20,6 +21,7 @@ public class StatusElementWidget : MonoBehaviour
     public void Initialize(StatusTempelate status, int value)
     {
         Type = status.Name;
+        currentValue = value;
         icon.sprite = status.Sprite;
         text.text = value.ToString();
     }
@@ -31,6 +33,7 @@ public class StatusElementWidget : MonoBehaviour
 
     public void UpdateModefier(int value)
     {
+        currentValue = value;
         text.text = value.ToString();
     }
 
